@@ -1,0 +1,11 @@
+Thing will be done in the evening
+1. Realise the function of finding the longest way in the graph
+2. Realise the generator of the choix for the serveral possible paths
+3. Realise the generator of the order of every machine
+    -> add the arcs in the graph
+
+And add all 3 things in one function, that is the solution
+For every possible solution, compare with the solution we have got, so then decide to
+change the solution or not
+
+Finally, add the function of drawing the graph in different color by add the paths

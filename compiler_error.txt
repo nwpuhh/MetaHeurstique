@@ -1,0 +1,353 @@
+FileTreater.cpp: In member function ‘Job FileTreater::get_from_string(char*)’:
+FileTreater.cpp:15:17: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+     char* sep = " ";
+                 ^
+FileTreater.cpp: In constructor ‘FileTreater::FileTreater(char*)’:
+FileTreater.cpp:59:17: warning: ISO C++ forbids converting a string constant to ‘char*’ [-Wwrite-strings]
+     char* sep = " ";
+                 ^
+Graph.cpp: In member function ‘Point& Graph::get_point_by_job_and_op(int, int)’:
+Graph.cpp:212:11: warning: reference to local variable ‘target’ returned [-Wreturn-local-addr]
+     Point target(job_no, op_no);
+           ^
+In file included from /usr/include/c++/5/string:48:0,
+                 from /usr/include/c++/5/bits/locale_classes.h:40,
+                 from /usr/include/c++/5/bits/ios_base.h:41,
+                 from /usr/include/c++/5/ios:42,
+                 from /usr/include/c++/5/ostream:38,
+                 from /usr/include/c++/5/iostream:39,
+                 from header/Point.h:5,
+                 from header/Graph.h:4,
+                 from Graph.cpp:1:
+/usr/include/c++/5/bits/stl_function.h: In instantiation of ‘bool std::less<_Tp>::operator()(const _Tp&, const _Tp&) const [with _Tp = comp]’:
+/usr/include/c++/5/bits/stl_tree.h:1810:11:   required from ‘std::pair<std::_Rb_tree_node_base*, std::_Rb_tree_node_base*> std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::_M_get_insert_unique_pos(const key_type&) [with _Key = comp; _Val = std::pair<const comp, std::vector<std::pair<Point, std::pair<Edge_info, Point> > > >; _KeyOfValue = std::_Select1st<std::pair<const comp, std::vector<std::pair<Point, std::pair<Edge_info, Point> > > > >; _Compare = std::less<comp>; _Alloc = std::allocator<std::pair<const comp, std::vector<std::pair<Point, std::pair<Edge_info, Point> > > > >; std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::key_type = comp]’
+/usr/include/c++/5/bits/stl_tree.h:1863:28:   required from ‘std::pair<std::_Rb_tree_iterator<_Val>, bool> std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>::_M_insert_unique(_Arg&&) [with _Arg = std::pair<comp, std::vector<std::pair<Point, std::pair<Edge_info, Point> > > >; _Key = comp; _Val = std::pair<const comp, std::vector<std::pair<Point, std::pair<Edge_info, Point> > > >; _KeyOfValue = std::_Select1st<std::pair<const comp, std::vector<std::pair<Point, std::pair<Edge_info, Point> > > > >; _Compare = std::less<comp>; _Alloc = std::allocator<std::pair<const comp, std::vector<std::pair<Point, std::pair<Edge_info, Point> > > > >]’
+/usr/include/c++/5/bits/stl_map.h:621:64:   required from ‘std::pair<typename std::_Rb_tree<_Key, std::pair<const _Key, _Tp>, std::_Select1st<std::pair<const _Key, _Tp> >, _Compare, typename __gnu_cxx::__alloc_traits<_Allocator>::rebind<std::pair<const _Key, _Tp> >::other>::iterator, bool> std::map<_Key, _Tp, _Compare, _Alloc>::insert(_Pair&&) [with _Pair = std::pair<comp, std::vector<std::pair<Point, std::pair<Edge_info, Point> > > >; <template-parameter-2-2> = void; _Key = comp; _Tp = std::vector<std::pair<Point, std::pair<Edge_info, Point> > >; _Compare = std::less<comp>; _Alloc = std::allocator<std::pair<const comp, std::vector<std::pair<Point, std::pair<Edge_info, Point> > > > >; typename std::_Rb_tree<_Key, std::pair<const _Key, _Tp>, std::_Select1st<std::pair<const _Key, _Tp> >, _Compare, typename __gnu_cxx::__alloc_traits<_Allocator>::rebind<std::pair<const _Key, _Tp> >::other>::iterator = std::_Rb_tree_iterator<std::pair<const comp, std::vector<std::pair<Point, std::pair<Edge_info, Point> > > > >]’
+Graph.cpp:255:110:   required from here
+/usr/include/c++/5/bits/stl_function.h:387:20: error: no match for ‘operator<’ (operand types are ‘const comp’ and ‘const comp’)
+       { return __x < __y; }
+                    ^
+In file included from Graph.cpp:1:0:
+header/Graph.h:21:10: note: candidate: bool comp::operator<(comp) <near match>
+     bool operator< (const comp s)
+          ^
+header/Graph.h:21:10: note:   passing ‘const comp*’ as ‘this’ argument discards qualifiers
+In file included from /usr/include/c++/5/bits/stl_algobase.h:64:0,
+                 from /usr/include/c++/5/vector:60,
+                 from header/Operation.h:4,
+                 from header/Point.h:3,
+                 from header/Graph.h:4,
+                 from Graph.cpp:1:
+/usr/include/c++/5/bits/stl_pair.h:220:5: note: candidate: template<class _T1, class _T2> constexpr bool std::operator<(const std::pair<_T1, _T2>&, const std::pair<_T1, _T2>&)
+     operator<(const pair<_T1, _T2>& __x, const pair<_T1, _T2>& __y)
+     ^
+/usr/include/c++/5/bits/stl_pair.h:220:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/5/string:48:0,
+                 from /usr/include/c++/5/bits/locale_classes.h:40,
+                 from /usr/include/c++/5/bits/ios_base.h:41,
+                 from /usr/include/c++/5/ios:42,
+                 from /usr/include/c++/5/ostream:38,
+                 from /usr/include/c++/5/iostream:39,
+                 from header/Point.h:5,
+                 from header/Graph.h:4,
+                 from Graph.cpp:1:
+/usr/include/c++/5/bits/stl_function.h:387:20: note:   ‘const comp’ is not derived from ‘const std::pair<_T1, _T2>’
+       { return __x < __y; }
+                    ^
+In file included from /usr/include/c++/5/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/5/vector:60,
+                 from header/Operation.h:4,
+                 from header/Point.h:3,
+                 from header/Graph.h:4,
+                 from Graph.cpp:1:
+/usr/include/c++/5/bits/stl_iterator.h:298:5: note: candidate: template<class _Iterator> bool std::operator<(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_Iterator>&)
+     operator<(const reverse_iterator<_Iterator>& __x,
+     ^
+/usr/include/c++/5/bits/stl_iterator.h:298:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/5/string:48:0,
+                 from /usr/include/c++/5/bits/locale_classes.h:40,
+                 from /usr/include/c++/5/bits/ios_base.h:41,
+                 from /usr/include/c++/5/ios:42,
+                 from /usr/include/c++/5/ostream:38,
+                 from /usr/include/c++/5/iostream:39,
+                 from header/Point.h:5,
+                 from header/Graph.h:4,
+                 from Graph.cpp:1:
+/usr/include/c++/5/bits/stl_function.h:387:20: note:   ‘const comp’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+       { return __x < __y; }
+                    ^
+In file included from /usr/include/c++/5/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/5/vector:60,
+                 from header/Operation.h:4,
+                 from header/Point.h:3,
+                 from header/Graph.h:4,
+                 from Graph.cpp:1:
+/usr/include/c++/5/bits/stl_iterator.h:348:5: note: candidate: template<class _IteratorL, class _IteratorR> bool std::operator<(const std::reverse_iterator<_Iterator>&, const std::reverse_iterator<_IteratorR>&)
+     operator<(const reverse_iterator<_IteratorL>& __x,
+     ^
+/usr/include/c++/5/bits/stl_iterator.h:348:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/5/string:48:0,
+                 from /usr/include/c++/5/bits/locale_classes.h:40,
+                 from /usr/include/c++/5/bits/ios_base.h:41,
+                 from /usr/include/c++/5/ios:42,
+                 from /usr/include/c++/5/ostream:38,
+                 from /usr/include/c++/5/iostream:39,
+                 from header/Point.h:5,
+                 from header/Graph.h:4,
+                 from Graph.cpp:1:
+/usr/include/c++/5/bits/stl_function.h:387:20: note:   ‘const comp’ is not derived from ‘const std::reverse_iterator<_Iterator>’
+       { return __x < __y; }
+                    ^
+In file included from /usr/include/c++/5/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/5/vector:60,
+                 from header/Operation.h:4,
+                 from header/Point.h:3,
+                 from header/Graph.h:4,
+                 from Graph.cpp:1:
+/usr/include/c++/5/bits/stl_iterator.h:1089:5: note: candidate: template<class _IteratorL, class _IteratorR> bool std::operator<(const std::move_iterator<_Iterator>&, const std::move_iterator<_IteratorR>&)
+     operator<(const move_iterator<_IteratorL>& __x,
+     ^
+/usr/include/c++/5/bits/stl_iterator.h:1089:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/5/string:48:0,
+                 from /usr/include/c++/5/bits/locale_classes.h:40,
+                 from /usr/include/c++/5/bits/ios_base.h:41,
+                 from /usr/include/c++/5/ios:42,
+                 from /usr/include/c++/5/ostream:38,
+                 from /usr/include/c++/5/iostream:39,
+                 from header/Point.h:5,
+                 from header/Graph.h:4,
+                 from Graph.cpp:1:
+/usr/include/c++/5/bits/stl_function.h:387:20: note:   ‘const comp’ is not derived from ‘const std::move_iterator<_Iterator>’
+       { return __x < __y; }
+                    ^
+In file included from /usr/include/c++/5/bits/stl_algobase.h:67:0,
+                 from /usr/include/c++/5/vector:60,
+                 from header/Operation.h:4,
+                 from header/Point.h:3,
+                 from header/Graph.h:4,
+                 from Graph.cpp:1:
+/usr/include/c++/5/bits/stl_iterator.h:1095:5: note: candidate: template<class _Iterator> bool std::operator<(const std::move_iterator<_Iterator>&, const std::move_iterator<_Iterator>&)
+     operator<(const move_iterator<_Iterator>& __x,
+     ^
+/usr/include/c++/5/bits/stl_iterator.h:1095:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/5/string:48:0,
+                 from /usr/include/c++/5/bits/locale_classes.h:40,
+                 from /usr/include/c++/5/bits/ios_base.h:41,
+                 from /usr/include/c++/5/ios:42,
+                 from /usr/include/c++/5/ostream:38,
+                 from /usr/include/c++/5/iostream:39,
+                 from header/Point.h:5,
+                 from header/Graph.h:4,
+                 from Graph.cpp:1:
+/usr/include/c++/5/bits/stl_function.h:387:20: note:   ‘const comp’ is not derived from ‘const std::move_iterator<_Iterator>’
+       { return __x < __y; }
+                    ^
+In file included from /usr/include/c++/5/vector:64:0,
+                 from header/Operation.h:4,
+                 from header/Point.h:3,
+                 from header/Graph.h:4,
+                 from Graph.cpp:1:
+/usr/include/c++/5/bits/stl_vector.h:1528:5: note: candidate: template<class _Tp, class _Alloc> bool std::operator<(const std::vector<_Tp, _Alloc>&, const std::vector<_Tp, _Alloc>&)
+     operator<(const vector<_Tp, _Alloc>& __x, const vector<_Tp, _Alloc>& __y)
+     ^
+/usr/include/c++/5/bits/stl_vector.h:1528:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/5/string:48:0,
+                 from /usr/include/c++/5/bits/locale_classes.h:40,
+                 from /usr/include/c++/5/bits/ios_base.h:41,
+                 from /usr/include/c++/5/ios:42,
+                 from /usr/include/c++/5/ostream:38,
+                 from /usr/include/c++/5/iostream:39,
+                 from header/Point.h:5,
+                 from header/Graph.h:4,
+                 from Graph.cpp:1:
+/usr/include/c++/5/bits/stl_function.h:387:20: note:   ‘const comp’ is not derived from ‘const std::vector<_Tp, _Alloc>’
+       { return __x < __y; }
+                    ^
+In file included from /usr/include/c++/5/string:52:0,
+                 from /usr/include/c++/5/bits/locale_classes.h:40,
+                 from /usr/include/c++/5/bits/ios_base.h:41,
+                 from /usr/include/c++/5/ios:42,
+                 from /usr/include/c++/5/ostream:38,
+                 from /usr/include/c++/5/iostream:39,
+                 from header/Point.h:5,
+                 from header/Graph.h:4,
+                 from Graph.cpp:1:
+/usr/include/c++/5/bits/basic_string.h:4987:5: note: candidate: template<class _CharT, class _Traits, class _Alloc> bool std::operator<(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&, const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&)
+     operator<(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+     ^
+/usr/include/c++/5/bits/basic_string.h:4987:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/5/string:48:0,
+                 from /usr/include/c++/5/bits/locale_classes.h:40,
+                 from /usr/include/c++/5/bits/ios_base.h:41,
+                 from /usr/include/c++/5/ios:42,
+                 from /usr/include/c++/5/ostream:38,
+                 from /usr/include/c++/5/iostream:39,
+                 from header/Point.h:5,
+                 from header/Graph.h:4,
+                 from Graph.cpp:1:
+/usr/include/c++/5/bits/stl_function.h:387:20: note:   ‘const comp’ is not derived from ‘const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>’
+       { return __x < __y; }
+                    ^
+In file included from /usr/include/c++/5/string:52:0,
+                 from /usr/include/c++/5/bits/locale_classes.h:40,
+                 from /usr/include/c++/5/bits/ios_base.h:41,
+                 from /usr/include/c++/5/ios:42,
+                 from /usr/include/c++/5/ostream:38,
+                 from /usr/include/c++/5/iostream:39,
+                 from header/Point.h:5,
+                 from header/Graph.h:4,
+                 from Graph.cpp:1:
+/usr/include/c++/5/bits/basic_string.h:4999:5: note: candidate: template<class _CharT, class _Traits, class _Alloc> bool std::operator<(const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&, const _CharT*)
+     operator<(const basic_string<_CharT, _Traits, _Alloc>& __lhs,
+     ^
+/usr/include/c++/5/bits/basic_string.h:4999:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/5/string:48:0,
+                 from /usr/include/c++/5/bits/locale_classes.h:40,
+                 from /usr/include/c++/5/bits/ios_base.h:41,
+                 from /usr/include/c++/5/ios:42,
+                 from /usr/include/c++/5/ostream:38,
+                 from /usr/include/c++/5/iostream:39,
+                 from header/Point.h:5,
+                 from header/Graph.h:4,
+                 from Graph.cpp:1:
+/usr/include/c++/5/bits/stl_function.h:387:20: note:   ‘const comp’ is not derived from ‘const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>’
+       { return __x < __y; }
+                    ^
+In file included from /usr/include/c++/5/string:52:0,
+                 from /usr/include/c++/5/bits/locale_classes.h:40,
+                 from /usr/include/c++/5/bits/ios_base.h:41,
+                 from /usr/include/c++/5/ios:42,
+                 from /usr/include/c++/5/ostream:38,
+                 from /usr/include/c++/5/iostream:39,
+                 from header/Point.h:5,
+                 from header/Graph.h:4,
+                 from Graph.cpp:1:
+/usr/include/c++/5/bits/basic_string.h:5011:5: note: candidate: template<class _CharT, class _Traits, class _Alloc> bool std::operator<(const _CharT*, const std::__cxx11::basic_string<_CharT, _Traits, _Alloc>&)
+     operator<(const _CharT* __lhs,
+     ^
+/usr/include/c++/5/bits/basic_string.h:5011:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/5/string:48:0,
+                 from /usr/include/c++/5/bits/locale_classes.h:40,
+                 from /usr/include/c++/5/bits/ios_base.h:41,
+                 from /usr/include/c++/5/ios:42,
+                 from /usr/include/c++/5/ostream:38,
+                 from /usr/include/c++/5/iostream:39,
+                 from header/Point.h:5,
+                 from header/Graph.h:4,
+                 from Graph.cpp:1:
+/usr/include/c++/5/bits/stl_function.h:387:20: note:   mismatched types ‘const _CharT*’ and ‘comp’
+       { return __x < __y; }
+                    ^
+In file included from /usr/include/c++/5/bits/ios_base.h:46:0,
+                 from /usr/include/c++/5/ios:42,
+                 from /usr/include/c++/5/ostream:38,
+                 from /usr/include/c++/5/iostream:39,
+                 from header/Point.h:5,
+                 from header/Graph.h:4,
+                 from Graph.cpp:1:
+/usr/include/c++/5/system_error:200:3: note: candidate: bool std::operator<(const std::error_code&, const std::error_code&)
+   operator<(const error_code& __lhs, const error_code& __rhs) noexcept
+   ^
+/usr/include/c++/5/system_error:200:3: note:   no known conversion for argument 1 from ‘const comp’ to ‘const std::error_code&’
+/usr/include/c++/5/system_error:274:3: note: candidate: bool std::operator<(const std::error_condition&, const std::error_condition&)
+   operator<(const error_condition& __lhs,
+   ^
+/usr/include/c++/5/system_error:274:3: note:   no known conversion for argument 1 from ‘const comp’ to ‘const std::error_condition&’
+In file included from /usr/include/c++/5/map:60:0,
+                 from header/Graph.h:6,
+                 from Graph.cpp:1:
+/usr/include/c++/5/bits/stl_tree.h:1283:5: note: candidate: template<class _Key, class _Val, class _KeyOfValue, class _Compare, class _Alloc> bool std::operator<(const std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>&, const std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>&)
+     operator<(const _Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>& __x,
+     ^
+/usr/include/c++/5/bits/stl_tree.h:1283:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/5/string:48:0,
+                 from /usr/include/c++/5/bits/locale_classes.h:40,
+                 from /usr/include/c++/5/bits/ios_base.h:41,
+                 from /usr/include/c++/5/ios:42,
+                 from /usr/include/c++/5/ostream:38,
+                 from /usr/include/c++/5/iostream:39,
+                 from header/Point.h:5,
+                 from header/Graph.h:4,
+                 from Graph.cpp:1:
+/usr/include/c++/5/bits/stl_function.h:387:20: note:   ‘const comp’ is not derived from ‘const std::_Rb_tree<_Key, _Val, _KeyOfValue, _Compare, _Alloc>’
+       { return __x < __y; }
+                    ^
+In file included from /usr/include/c++/5/tuple:39:0,
+                 from /usr/include/c++/5/bits/stl_map.h:63,
+                 from /usr/include/c++/5/map:61,
+                 from header/Graph.h:6,
+                 from Graph.cpp:1:
+/usr/include/c++/5/array:250:5: note: candidate: template<class _Tp, long unsigned int _Nm> bool std::operator<(const std::array<_Tp, _Nm>&, const std::array<_Tp, _Nm>&)
+     operator<(const array<_Tp, _Nm>& __a, const array<_Tp, _Nm>& __b)
+     ^
+/usr/include/c++/5/array:250:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/5/string:48:0,
+                 from /usr/include/c++/5/bits/locale_classes.h:40,
+                 from /usr/include/c++/5/bits/ios_base.h:41,
+                 from /usr/include/c++/5/ios:42,
+                 from /usr/include/c++/5/ostream:38,
+                 from /usr/include/c++/5/iostream:39,
+                 from header/Point.h:5,
+                 from header/Graph.h:4,
+                 from Graph.cpp:1:
+/usr/include/c++/5/bits/stl_function.h:387:20: note:   ‘const comp’ is not derived from ‘const std::array<_Tp, _Nm>’
+       { return __x < __y; }
+                    ^
+In file included from /usr/include/c++/5/bits/stl_map.h:63:0,
+                 from /usr/include/c++/5/map:61,
+                 from header/Graph.h:6,
+                 from Graph.cpp:1:
+/usr/include/c++/5/tuple:928:5: note: candidate: template<class ... _TElements, class ... _UElements> constexpr bool std::operator<(const std::tuple<_Args1 ...>&, const std::tuple<_Args2 ...>&)
+     operator<(const tuple<_TElements...>& __t,
+     ^
+/usr/include/c++/5/tuple:928:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/5/string:48:0,
+                 from /usr/include/c++/5/bits/locale_classes.h:40,
+                 from /usr/include/c++/5/bits/ios_base.h:41,
+                 from /usr/include/c++/5/ios:42,
+                 from /usr/include/c++/5/ostream:38,
+                 from /usr/include/c++/5/iostream:39,
+                 from header/Point.h:5,
+                 from header/Graph.h:4,
+                 from Graph.cpp:1:
+/usr/include/c++/5/bits/stl_function.h:387:20: note:   ‘const comp’ is not derived from ‘const std::tuple<_Args1 ...>’
+       { return __x < __y; }
+                    ^
+In file included from /usr/include/c++/5/map:61:0,
+                 from header/Graph.h:6,
+                 from Graph.cpp:1:
+/usr/include/c++/5/bits/stl_map.h:1090:5: note: candidate: template<class _Key, class _Tp, class _Compare, class _Alloc> bool std::operator<(const std::map<_Key, _Tp, _Compare, _Alloc>&, const std::map<_Key, _Tp, _Compare, _Alloc>&)
+     operator<(const map<_Key, _Tp, _Compare, _Alloc>& __x,
+     ^
+/usr/include/c++/5/bits/stl_map.h:1090:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/5/string:48:0,
+                 from /usr/include/c++/5/bits/locale_classes.h:40,
+                 from /usr/include/c++/5/bits/ios_base.h:41,
+                 from /usr/include/c++/5/ios:42,
+                 from /usr/include/c++/5/ostream:38,
+                 from /usr/include/c++/5/iostream:39,
+                 from header/Point.h:5,
+                 from header/Graph.h:4,
+                 from Graph.cpp:1:
+/usr/include/c++/5/bits/stl_function.h:387:20: note:   ‘const comp’ is not derived from ‘const std::map<_Key, _Tp, _Compare, _Alloc>’
+       { return __x < __y; }
+                    ^
+In file included from /usr/include/c++/5/map:62:0,
+                 from header/Graph.h:6,
+                 from Graph.cpp:1:
+/usr/include/c++/5/bits/stl_multimap.h:991:5: note: candidate: template<class _Key, class _Tp, class _Compare, class _Alloc> bool std::operator<(const std::multimap<_Key, _Tp, _Compare, _Alloc>&, const std::multimap<_Key, _Tp, _Compare, _Alloc>&)
+     operator<(const multimap<_Key, _Tp, _Compare, _Alloc>& __x,
+     ^
+/usr/include/c++/5/bits/stl_multimap.h:991:5: note:   template argument deduction/substitution failed:
+In file included from /usr/include/c++/5/string:48:0,
+                 from /usr/include/c++/5/bits/locale_classes.h:40,
+                 from /usr/include/c++/5/bits/ios_base.h:41,
+                 from /usr/include/c++/5/ios:42,
+                 from /usr/include/c++/5/ostream:38,
+                 from /usr/include/c++/5/iostream:39,
+                 from header/Point.h:5,
+                 from header/Graph.h:4,
+                 from Graph.cpp:1:
+/usr/include/c++/5/bits/stl_function.h:387:20: note:   ‘const comp’ is not derived from ‘const std::multimap<_Key, _Tp, _Compare, _Alloc>’
+       { return __x < __y; }
+                    ^
