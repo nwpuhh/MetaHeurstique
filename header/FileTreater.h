@@ -31,7 +31,7 @@ public:
     const vector<Job> get_jobs();
 
     /*Implement the interface between the Job and Machine*/
-    const vector<Machine> get_machines();
+    //const vector<Machine> get_machines();
 };
 
 #endif

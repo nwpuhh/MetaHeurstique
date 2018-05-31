@@ -16,6 +16,8 @@ typedef struct Edge_info {
 
 typedef pair<Point, Point> pp_pair;
 
+/*quit this type of hashmap for presenting the graph*/
+/*
 struct comp{
     pp_pair pair_key;
     bool operator< (const comp s)
@@ -23,8 +25,10 @@ struct comp{
         return (pair_key.first < s.pair_key.first) || (pair_key.first == s.pair_key.first && pair_key.second < s.pair_key.second);
     }
 };
+*/
+/*typedef map< comp, vector< pair<Point, pair<edge_info, Point> > > > pp_edges;*/
 
-typedef map< comp, vector< pair<Point, pair<edge_info, Point> > > > pp_edges;
+typedef vector< pair< pp_pair, vector< pair<Point, pair<edge_info, Point> > > > > point_to_point_edges_vector;
 
 class Graph 
 {
@@ -44,7 +48,9 @@ public:
     bool add_new_point(const Point & p_new);
     bool add_new_edge(const pair<Point, pair<edge_info, Point> > & edge_new);
     Point& get_point_by_job_and_op(const int job_no, const int op_no);
-    pp_edges get_edges_by_pp();
+   // pp_edges get_edges_by_pp();
+    point_to_point_edges_vector get_more_edges_between_two_points() const;
+    void print_pp_edges_vector();
 
     //need to add the function for visualisation
     void graph_draw();

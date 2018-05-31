@@ -1,4 +1,4 @@
-#include "header/FileTreater.h"
+#include "../header/FileTreater.h"
 #include <iostream>
 #include <fstream>
 #include <cstring>
@@ -112,6 +112,7 @@ const vector<Job> FileTreater::get_jobs()
     return jobs;
 }
 
+/*
 const vector<Machine> FileTreater::get_machines()
 {
     vector<Machine> machines = vector<Machine>(machines_num);
@@ -131,4 +132,4 @@ const vector<Machine> FileTreater::get_machines()
     }
 
     return machines;
-}
+}*/

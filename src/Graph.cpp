@@ -1,4 +1,4 @@
-#include "header/Graph.h"
+#include "../header/Graph.h"
 #include <iostream>
 #include <fstream>
 #include <algorithm>
@@ -224,6 +224,7 @@ Point& Graph::get_point_by_job_and_op(const int job_no, const int op_no)
 **** Description: get the vector of the map information in the graph
       ret -> vector<map< <point, point>, vector<edge> > >
 */
+/* !!!! Quit this function !!
 pp_edges Graph::get_edges_by_pp()
 {
     pp_edges pTop_edge;
@@ -247,20 +248,74 @@ pp_edges Graph::get_edges_by_pp()
             comp p_p_info = {p_p_info_pair};
             vector< pair<Point, pair<edge_info, Point> > > p_p_edges = vector< pair<Point, pair<edge_info, Point> > >();
             p_p_edges.push_back(edges[i]);
-            /* Has not been finished!!*/
             // then need to insert the new item, failed in compilation!!
             // find reason, because the map is realised by black-red tree
             // for the key, it at least need the operation of <
-            /*Finally, solve with the forced struct of pair<Point, Point>*/
             pTop_edge.insert(pair<comp, vector< pair<Point, pair<edge_info, Point> > > >(p_p_info, p_p_edges));
         }
     }
     return pTop_edge;
 }
-
-/*
-**** Get the choix for every possible solution 
 */
+
+/**
+**** Description: This function aims to change the graph into the type of 
+    vector<<P1, p2>, edges_between_p1_p2 >, for easily get those points who have 
+    serveral different edges, meaning serveral possibilites.
+**/
+point_to_point_edges_vector Graph::get_more_edges_between_two_points() const
+{
+    point_to_point_edges_vector p_p_edges_vector;
+
+    // loop the edges, so that get the vector of items which have more that 1 edges between 2 points
+    for(int i = 0; i < edges.size(); i++)
+    {
+        bool flag_exist = false;
+        for(int j = 0; j < p_p_edges_vector.size(); j++)
+        {
+            // judge the two points have been added into the vector or not
+            if(p_p_edges_vector[j].first.first == edges[i].first && p_p_edges_vector[j].first.second == edges[i].second.second)
+            {   
+                flag_exist = true;
+                p_p_edges_vector[j].second.push_back(edges[i]);
+                break;
+            }
+        }
+
+        // judge it needs add at the end of vector or not
+        if(!flag_exist)
+        {
+            pp_pair pp_pair_temp = make_pair(edges[i].first, edges[i].second.second);
+            vector< pair<Point, pair<edge_info, Point> > > pp_edges_temp = vector< pair<Point, pair<edge_info, Point> > >();
+            pp_edges_temp.push_back(edges[i]);
+            p_p_edges_vector.push_back(make_pair(pp_pair_temp, pp_edges_temp));
+        }
+    }
+    
+    //select those one who has more than one possibilities.
+    for(auto iter = p_p_edges_vector.begin(); iter != p_p_edges_vector.end(); )
+    {
+        if((iter->second).size() == 1)
+            iter = p_p_edges_vector.erase(iter);
+        else
+            iter++;
+    }
+    return p_p_edges_vector;
+}
+
+// print the vector we have gotten
+void Graph::print_pp_edges_vector()
+{
+    point_to_point_edges_vector v = get_more_edges_between_two_points();
+    for(int i = 0; i < v.size(); i++) 
+    {
+        v[i].first.first.print_point(); 
+        cout << "|";
+        v[i].first.second.print_point();
+        cout << ":";
+        v[i].second.size();
+    } 
+}
 
 
 /**
