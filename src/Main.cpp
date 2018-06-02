@@ -44,8 +44,31 @@ int main(int argc, char* argv[])
         graph.load_jobs(jobs);
         cout << "load Jobs succ" << endl;
         graph.graph_draw();
+        
+        cout << "Before choix vector" << endl;
+        vector<int> choix_vector = graph.get_size_vector_of_vector_more_edges();
+        cout << "After choix vector" << endl;
 
-        graph.print_pp_edges_vector();
+        int possible_noraml = 1;
+        for(int i = 0; i < choix_vector.size(); i++)
+           { cout << choix_vector[i] << " | "; possible_noraml *= choix_vector[i]; }
+        cout << endl;
+
+        vector< vector<int> > selections = graph.get_vector_of_selection(choix_vector, 0, choix_vector.size());
+
+        cout << "After selections gets" << endl;
+        /*
+        int cnt = 0;
+        for(int i = 0; i < selections.size(); i++)
+        {
+            for(int j = 0; j < selections[i].size(); j++)
+                cout << selections[i][j] << " ";
+            cout << endl;
+            cnt++;
+        }
+        cout << possible_noraml << endl;
+        cout << cnt << endl;*/
+        //graph.print_pp_edges_vector();
 
         /*
         comp c1 = {std::make_pair(Point(1,3), Point(2,3))};

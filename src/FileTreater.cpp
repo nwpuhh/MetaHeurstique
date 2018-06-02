@@ -112,24 +112,3 @@ const vector<Job> FileTreater::get_jobs()
     return jobs;
 }
 
-/*
-const vector<Machine> FileTreater::get_machines()
-{
-    vector<Machine> machines = vector<Machine>(machines_num);
-    for(int i = 0; i < machines_num; i++)
-        machines[i] = Machine(i);
-    
-    vector<Job> jobs = get_jobs();
-    for(int i = 0; i < jobs.size(); i++)
-    {
-        Operation * op_temp = jobs[i].get_op_p_index(i);
-        for(int j = 0; j < op_temp->get_pairs_num(); j++)
-        {
-            pair<int, int> pair_temp = op_temp->get_machine_time_pair_by_index(j);
-            pair<int, int> job_op_pair_temp = make_pair(i, j);
-            machines[pair_temp.first].add_op(job_op_pair_temp);      
-        }
-    }
-
-    return machines;
-}*/

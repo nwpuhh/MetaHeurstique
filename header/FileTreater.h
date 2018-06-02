@@ -3,7 +3,6 @@
 
 #include "Job.h"
 #include "Operation.h"
-#include "Machine.h"
 #include <vector>
 #include <utility>
 #include <cstdlib>
@@ -28,10 +27,10 @@ public:
     int get_jobs_num();
     int get_machines_num();
     Job get_ith_job(const int i);
-    const vector<Job> get_jobs();
 
     /*Implement the interface between the Job and Machine*/
-    //const vector<Machine> get_machines();
+    const vector<Job> get_jobs();
+    
 };
 
 #endif

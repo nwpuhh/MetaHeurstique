@@ -66,6 +66,36 @@ void Graph::print_points()
     { points[i].print_point();}
 }
 
+/*
+**** define the function for updating the state for the selected edge
+*/
+void Graph::change_state_of_selected_edge(const pair<Point, pair<edge_info, Point> > & edge_selected)
+{
+    for(int i = 0; i < edges.size(); i++)
+    {
+        if(edges[i].first == edge_selected.first && edges[i].second.second == edge_selected.second.second)
+        {
+            edges[i].second.first.used = 0;
+            break;
+        }
+    }
+}
+
+/*
+**** define the function for recovering the state for the selected edge
+*/
+void Graph::recover_state_of_selected_edge(const pair<Point, pair<edge_info, Point> > & edge_selected)
+{
+    for(int i = 0; i < edges.size(); i++)
+    {
+        if(edges[i].first == edge_selected.first && edges[i].second.second == edge_selected.second.second)
+        {
+            //recover the state of edge selected
+            edges[i].second.first.used = 1;
+            break;
+        }
+    }
+}
 
 /* implement the public functions */
 /* !!! need to be changed: which need the specific order of operations
@@ -201,7 +231,6 @@ bool Graph::add_new_edge(const pair<Point, pair<edge_info, Point> > & edge_new)
         edges.push_back(edge_new);
         return true;
     }
-
 }
 
 /**
@@ -219,44 +248,6 @@ Point& Graph::get_point_by_job_and_op(const int job_no, const int op_no)
     target = Point();
     return target;
 }
-
-/**
-**** Description: get the vector of the map information in the graph
-      ret -> vector<map< <point, point>, vector<edge> > >
-*/
-/* !!!! Quit this function !!
-pp_edges Graph::get_edges_by_pp()
-{
-    pp_edges pTop_edge;
-    for(int i = 0; i < edges.size(); i++)
-    {
-        bool flag_find = false;
-        //!!! can not use the find(), because not define the operator> for pair<Point, Point>
-        for(auto iter = pTop_edge.begin(); iter != pTop_edge.end(); iter++)
-        {
-            //find the item with the same key
-            if(iter->first.pair_key.first == edges[i].first && iter->first.pair_key.second == edges[i].second.second)
-            {
-                iter->second.push_back(edges[i]);
-                flag_find = true;
-                break;
-            }
-        }
-        if(!flag_find)
-        {
-            pp_pair p_p_info_pair = make_pair(edges[i].first, edges[i].second.second);
-            comp p_p_info = {p_p_info_pair};
-            vector< pair<Point, pair<edge_info, Point> > > p_p_edges = vector< pair<Point, pair<edge_info, Point> > >();
-            p_p_edges.push_back(edges[i]);
-            // then need to insert the new item, failed in compilation!!
-            // find reason, because the map is realised by black-red tree
-            // for the key, it at least need the operation of <
-            pTop_edge.insert(pair<comp, vector< pair<Point, pair<edge_info, Point> > > >(p_p_info, p_p_edges));
-        }
-    }
-    return pTop_edge;
-}
-*/
 
 /**
 **** Description: This function aims to change the graph into the type of 
@@ -318,6 +309,95 @@ void Graph::print_pp_edges_vector()
 }
 
 
+/*
+**** Description: Generate the selector for the servral edges for two points
+**** Input => The vector of number of the serveral possible choix for each pair<Point, Point>
+**** return the vector of int[vect_pp_info.size()],
+     where items are one selection. 
+*/
+vector<vector<int> > Graph::get_vector_of_selection(const vector<int> & p_p_e_num, int start, int last)
+{
+    vector<vector<int> > selections = vector<vector<int> >();
+    //The basic condition, return the vector of enum of the items in the last items
+    if(last == 0)
+        return selections;
+
+    if(start == last-1)
+    {
+        for(int i = 0; i < p_p_e_num[start]; i++)
+        {
+            vector<int> temp(1);
+            temp[0] = i+1;
+            selections.push_back(temp);
+        }
+    }
+    else
+    {
+        vector<vector<int> > selections_rest = get_vector_of_selection(p_p_e_num, start+1, last);
+    
+        for(int i = 0; i < p_p_e_num[start]; i++)
+        {
+            for(int j = 0; j < selections_rest.size(); j++)
+            {
+                selections_rest[j].push_back(i+1);
+                selections.push_back(selections_rest[j]);
+                selections_rest[j].pop_back();
+            }        
+        }
+    }
+    return selections;
+}
+
+
+/**
+**** Description: Get the size of vector from the point_to_point_edges_vector
+*/
+vector<int> Graph::get_size_vector_of_vector_more_edges()
+{
+    vector<int> ret;
+    point_to_point_edges_vector edges_vector = get_more_edges_between_two_points();
+    for(int i = 0; i < edges_vector.size(); i++)
+        ret.push_back(edges_vector[i].second.size());
+    return ret;
+}
+
+/* The part of updating the graph with selected edges and selected machine order*/
+/*
+**** Description: update the graph with the edges selected, which is decided by the 
+      vector of chosen, and the p_p_e_vector
+*/
+void Graph::update_graph_by_edges_selected(const point_to_point_edges_vector & p_p_e_vector, const vector<int> & edges_selected)
+{
+    int edges_size = edges_selected.size();
+    for(int i = 0; i < edges_size; i++)
+    {
+        for(j = 0; j < p_p_e_vector[i].second.size(); j++)
+        {
+            // if it is not the selected edge, change the state of used => 0
+            // because of the vector should be in reverse
+            if(j != edges_selected[edges_size - 1 -i] - 1)
+                update_graph_by_edges_selected(p_p_e_vector[i].second[j]);
+        }
+    }
+}
+
+void Graph::recover_graph_by_edges_selected(const point_to_point_edges_vector & p_p_vector, const vector<int> & edges_selected)
+{
+    int edges_size = edges_selected.size();
+    for(int i = 0; i < edges_size; i++)
+    {
+        for(j = 0; j < p_p_e_vector[i].second.size(); j++)
+        {
+            // if it is not the selected edge, change the state of used => 1 for recover  
+            // because of the vector should be in reverse
+            if(j != edges_selected[edges_size - 1 -i] - 1)
+                recover_state_of_selected_edge(p_p_e_vector[i].second[j]);
+        }
+    }
+}
+
+
+/**** Part of visualisation of graph ****/
 /**
 **** Description: draw the graph by generating the .dot file to use the dot tool
 ****    in graphviz library

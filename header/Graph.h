@@ -16,18 +16,6 @@ typedef struct Edge_info {
 
 typedef pair<Point, Point> pp_pair;
 
-/*quit this type of hashmap for presenting the graph*/
-/*
-struct comp{
-    pp_pair pair_key;
-    bool operator< (const comp s)
-    {
-        return (pair_key.first < s.pair_key.first) || (pair_key.first == s.pair_key.first && pair_key.second < s.pair_key.second);
-    }
-};
-*/
-/*typedef map< comp, vector< pair<Point, pair<edge_info, Point> > > > pp_edges;*/
-
 typedef vector< pair< pp_pair, vector< pair<Point, pair<edge_info, Point> > > > > point_to_point_edges_vector;
 
 class Graph 
@@ -42,6 +30,13 @@ private:
     vector<edge_info> get_edge_info_by_points(const Point & p1, const Point & p2) const;
     void print_points();
 
+    //define the function for changing the state of selected edge, which will made the 
+    // "used" in the edge_info to be 2 if this edge is selected
+    void change_state_of_selected_edge(const pair<Point, pair<edge_info, Point> > & edge_selected);
+
+    //function for recover the state of selected edges
+    void recover_state_of_selected_edge(const pair<Point, pair<edge_info, Point> > & edge_selected);
+
 public:
     Graph() { points = vector<Point>(); edges = vector< pair<Point, pair<edge_info, Point> > >(); }
     void load_jobs(vector<Job> & jobs);
@@ -51,6 +46,15 @@ public:
    // pp_edges get_edges_by_pp();
     point_to_point_edges_vector get_more_edges_between_two_points() const;
     void print_pp_edges_vector();
+
+
+    // get all combination of the edges
+    vector<vector<int> > get_vector_of_selection(const vector<int> & p_p_e_num, int start, int last);
+    vector<int> get_size_vector_of_vector_more_edges();
+
+    //define the function for changing the graph
+    void update_graph_by_edges_selected(const point_to_point_edges_vector & p_p_vector, const vector<int> & edges_selected);
+    void recover_graph_by_edges_selected(const point_to_point_edges_vector & p_p_vector, const vector<int> & edges_selected);
 
     //need to add the function for visualisation
     void graph_draw();
