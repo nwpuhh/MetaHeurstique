@@ -10,6 +10,8 @@
 using std::vector;
 using std::pair;
 
+typedef map< int, vector< pair<int, int> > > machines;
+
 class FileTreater 
 {
 private:
@@ -18,6 +20,9 @@ private:
     int         machines_num;
 
     Job get_from_string(char* data);
+
+    // private function for help insert the items in machines
+    void add_pairs_in_machines(machines & m_s, int m_no, int j_no, int o_no);
 
 public:
     //define the constructor of FileTreater
@@ -30,7 +35,8 @@ public:
 
     /*Implement the interface between the Job and Machine*/
     const vector<Job> get_jobs();
-    
+    machines get_all_operation_in_machine(vector<Job> jobs);
+    void print_machines_info(const machines & m_s);
 };
 
 #endif

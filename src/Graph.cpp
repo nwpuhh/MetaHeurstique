@@ -67,17 +67,20 @@ void Graph::print_points()
 }
 
 /*
-**** define the function for updating the state for the selected edge
+**** define the function for updating the state for those not selected edges
+      will change the flag "used" into 0
 */
 void Graph::change_state_of_selected_edge(const pair<Point, pair<edge_info, Point> > & edge_selected)
 {
     for(int i = 0; i < edges.size(); i++)
     {
         if(edges[i].first == edge_selected.first && edges[i].second.second == edge_selected.second.second)
-        {
-            edges[i].second.first.used = 0;
-            break;
-        }
+            //forget the machine_no is the key!!!
+            if(edge_selected.second.first.machine_no == edges[i].second.first.machine_no)
+            {
+                edges[i].second.first.used = 0;
+                break;
+            }
     }
 }
 
@@ -89,11 +92,39 @@ void Graph::recover_state_of_selected_edge(const pair<Point, pair<edge_info, Poi
     for(int i = 0; i < edges.size(); i++)
     {
         if(edges[i].first == edge_selected.first && edges[i].second.second == edge_selected.second.second)
+            if(edge_selected.second.first.machine_no == edges[i].second.first.machine_no)
+            {
+                //recover the state of edge selected
+                edges[i].second.first.used = 1;
+                break;
+            }
+    }
+}
+
+/*
+**** Description: Function private for add pairs in the map of machines
+        input -> machines& + machine_no + Job_no + Operation_no
+**/
+void Graph::add_pairs_in_machines(machines & m_s, int m_no, int j_no, int o_no)
+{
+    pair<int, int> temp_pair = make_pair(j_no, o_no);
+    bool flag_exist = false;
+    for(auto iter = m_s.begin(); iter != m_s.end(); iter++)
+    {
+        if(iter->first == m_no)
         {
-            //recover the state of edge selected
-            edges[i].second.first.used = 1;
+            iter->second.push_back(temp_pair);
+            flag_exist = true;
             break;
         }
+    }
+
+    // if not find, add the <m_no, <j_no, o_no> > into the map
+    if(!flag_exist)
+    {
+        vector<pair<int, int> > new_vector;
+        new_vector.push_back(temp_pair);
+        m_s.insert(pair<int, vector<pair<int, int> > >(m_no, new_vector));
     }
 }
 
@@ -295,9 +326,8 @@ point_to_point_edges_vector Graph::get_more_edges_between_two_points() const
 }
 
 // print the vector we have gotten
-void Graph::print_pp_edges_vector()
+void Graph::print_pp_edges_vector( point_to_point_edges_vector & v)
 {
-    point_to_point_edges_vector v = get_more_edges_between_two_points();
     for(int i = 0; i < v.size(); i++) 
     {
         v[i].first.first.print_point(); 
@@ -307,7 +337,6 @@ void Graph::print_pp_edges_vector()
         v[i].second.size();
     } 
 }
-
 
 /*
 **** Description: Generate the selector for the servral edges for two points
@@ -350,12 +379,11 @@ vector<vector<int> > Graph::get_vector_of_selection(const vector<int> & p_p_e_nu
 
 
 /**
-**** Description: Get the size of vector from the point_to_point_edges_vector
+**** Description: Get the len of vector from the point_to_point_edges_vector
 */
-vector<int> Graph::get_size_vector_of_vector_more_edges()
+vector<int> Graph::get_len_vector_of_vector_more_edges(const point_to_point_edges_vector & edges_vector)
 {
     vector<int> ret;
-    point_to_point_edges_vector edges_vector = get_more_edges_between_two_points();
     for(int i = 0; i < edges_vector.size(); i++)
         ret.push_back(edges_vector[i].second.size());
     return ret;
@@ -371,12 +399,16 @@ void Graph::update_graph_by_edges_selected(const point_to_point_edges_vector & p
     int edges_size = edges_selected.size();
     for(int i = 0; i < edges_size; i++)
     {
-        for(j = 0; j < p_p_e_vector[i].second.size(); j++)
+        for(int j = 0; j < p_p_e_vector[i].second.size(); j++)
         {
             // if it is not the selected edge, change the state of used => 0
             // because of the vector should be in reverse
-            if(j != edges_selected[edges_size - 1 -i] - 1)
-                update_graph_by_edges_selected(p_p_e_vector[i].second[j]);
+            if(j != (edges_selected[edges_size - 1 -i] - 1))
+            {
+                change_state_of_selected_edge(p_p_e_vector[i].second[j]);
+                cout << "In " << i << " selection," << j << endl;
+            }
+               
         }
     }
 }
@@ -386,13 +418,96 @@ void Graph::recover_graph_by_edges_selected(const point_to_point_edges_vector & 
     int edges_size = edges_selected.size();
     for(int i = 0; i < edges_size; i++)
     {
-        for(j = 0; j < p_p_e_vector[i].second.size(); j++)
+        for(int j = 0; j < p_p_vector[i].second.size(); j++)
         {
             // if it is not the selected edge, change the state of used => 1 for recover  
             // because of the vector should be in reverse
             if(j != edges_selected[edges_size - 1 -i] - 1)
-                recover_state_of_selected_edge(p_p_e_vector[i].second[j]);
+                recover_state_of_selected_edge(p_p_vector[i].second[j]);
         }
+    }
+}
+
+/*
+**** Description: get the info about machine, which are used in the graph
+**** !!! normally, we use this function after we have already selected 
+        edges which are servaral choix.
+*/
+machines Graph::get_machines_used_in_graph()
+{
+    machines machines_graph;
+    // using edges in the graph to generate the machines
+    for(int i = 0; i < edges.size(); i++)
+    {
+        int m_no = edges[i].second.first.machine_no;
+        int used = edges[i].second.first.used;
+        Point start = edges[i].first;
+        if(used == 1)
+            add_pairs_in_machines(machines_graph, m_no, start.get_point_job_no(), start.get_point_op_no());
+    }
+    return machines_graph;
+}
+
+void Graph::print_machines_info(const machines & m_s) 
+{
+    for(auto iter = m_s.begin(); iter != m_s.end(); iter++)
+    {
+        cout << iter->first << endl;
+        for(int i = 0; i < iter->second.size(); i++)
+            cout << "<Job_no " << iter->second[i].first << ", Op_no " << iter->second[i].second << ">" << endl;
+    }
+}
+
+/*
+**** Description: get the every possible order for one machine, from start to last
+**** Because of using function of 'swap', for take it much easier, do not use const here
+    "start" is the place start, last is the len-1
+*/
+vector<vector<pair<int, int> > > Graph::get_order_for_one_machine(vector<pair<int, int> > & m, int start, int last)
+{
+    vector<vector<pair<int, int> > > machine_order;
+
+    //define the basic condition, which indicate it has arrived
+    if(start == last)
+    {
+        vector<pair<int, int> > last_items;
+        last_items.push_back(m[last]);
+        machine_order.push_back(last_items);
+    }
+    else
+    {
+        for(int i = start; i <= last; i++)
+        {
+            //at first, change the items order
+            pair<int, int> temp = m[start];
+            m[start] = m[i];
+            m[i] = temp;
+            // get the order vector for the rest
+            vector<vector<pair<int, int> > > machine_order_rest = get_order_for_one_machine(m, start+1, last);
+            // add the chosen items into the first one
+            for(int j = 0; j < machine_order_rest.size(); j++)
+            {
+                vector<pair<int,int> > temp = machine_order_rest[j];
+                temp.insert(temp.begin(), m[start]);
+                machine_order.push_back(temp);
+            }
+
+            // recover the original order of the vector
+            temp = m[i];
+            m[i] = m[start];
+            m[start] = temp;
+        }
+    }
+    return machine_order;
+}
+
+void Graph::print_order_for_one_machine(const vector<vector<pair<int, int> > > & order)
+{
+    for(int i = 0; i < order.size(); i++)
+    {
+        for(int j = 0; j < order[i].size(); j++)
+            cout << "Job " << order[i][j].first << ", Op " << order[i][j].second << " ";
+        cout << endl;
     }
 }
 
@@ -403,6 +518,9 @@ void Graph::recover_graph_by_edges_selected(const point_to_point_edges_vector & 
 ****    in graphviz library
 **** !!note: This is the function of draw graph initilaized
             no color specific!! no choosing path!!
+**** 2018.6.2 add the flag "used" for indentify edges used or not
+            used -> 1 => selected -> color black
+                 -> 0 => not selected -> color red
 */
 void Graph::graph_draw()
 {
@@ -430,6 +548,7 @@ void Graph::graph_draw()
         }
         out << "\n";
         /* Finally,add the edges in the graph */
+        /*!! 6.2 add the color for identifing the edges not used*/
         for(int i = 0; i < edges.size(); i++)
         {
             Point from = edges[i].first;
@@ -440,9 +559,17 @@ void Graph::graph_draw()
             int job_no_to   = to.get_point_job_no()+1;
             int op_no_to    = to.get_point_op_no()+1;
             out << "\tP" << job_no_from<<op_no_from << "->" 
-                << "P" << job_no_to<<op_no_to 
-                << " [label=\"<machine " << edge_label.machine_no 
-                << ", time " << edge_label.weight << ">\"]\n";
+                << "P" << job_no_to<<op_no_to ;
+            if(edge_label.used == 1) // selected => black
+            {
+                out << " [label=\"<machine " << edge_label.machine_no 
+                << ", time " << edge_label.weight << ">\", color=\"black\"]\n";
+            } 
+            else //not selected => red
+            {   
+                out << " [label=\"<machine " << edge_label.machine_no 
+                << ", time " << edge_label.weight << ">\", color=\"red\"]\n";
+            }
         }
         out << "}";
         out.close();

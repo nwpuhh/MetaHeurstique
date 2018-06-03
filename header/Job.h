@@ -2,8 +2,12 @@
 #define __JOB_H_
 
 #include "Operation.h"
-#include "Machine.h"
+#include <map>
 
+using std::vector;
+using std::map;
+
+typedef map< int, vector< pair<int, int> > > machines;
 
 class Job 
 {

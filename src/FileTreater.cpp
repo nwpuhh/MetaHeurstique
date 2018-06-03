@@ -39,6 +39,33 @@ Job FileTreater::get_from_string(char* data)
     return temp_job;
 }
 
+/*
+**** Description: Function private for add pairs in the map of machines
+        input -> machines& + machine_no + Job_no + Operation_no
+**/
+void FileTreater::add_pairs_in_machines(machines & m_s, int m_no, int j_no, int o_no)
+{
+    pair<int, int> temp_pair = make_pair(j_no, o_no);
+    bool flag_exist = false;
+    for(auto iter = m_s.begin(); iter != m_s.end(); iter++)
+    {
+        if(iter->first == m_no)
+        {
+            iter->second.push_back(temp_pair);
+            flag_exist = true;
+            break;
+        }
+    }
+
+    // if not find, add the <m_no, <j_no, o_no> > into the map
+    if(!flag_exist)
+    {
+        vector<pair<int, int> > new_vector;
+        new_vector.push_back(temp_pair);
+        m_s.insert(pair<int, vector<pair<int, int> > >(m_no, new_vector));
+    }
+}
+
 /* implement the public functions */
 FileTreater::FileTreater(char* path) 
 {
@@ -112,3 +139,37 @@ const vector<Job> FileTreater::get_jobs()
     return jobs;
 }
 
+/*
+**** Description: implementing the interface between the .txt and machines
+        with the help of vector<Job> which we have gotten
+*/
+machines FileTreater::get_all_operation_in_machine(vector<Job> jobs)
+{
+    machines machines_in_text;
+    Operation* temp;
+    for(int i = 0; i < jobs.size(); i++)
+    {
+        for(int j = 0; j < jobs[i].get_ops_nums(); j++)
+        {
+            temp = jobs[i].get_op_p_index(j);
+            for(int k = 0; k < temp->get_pairs_num(); k++)
+            {
+                // pair<m_no, time>
+                pair<int, int> temp_pair_m_t = temp->get_machine_time_pair_by_index(k); 
+                add_pairs_in_machines(machines_in_text, temp_pair_m_t.first, i, j);
+            }
+        }
+    }
+
+    return machines_in_text;
+}
+
+void FileTreater::print_machines_info(const machines & m_s) 
+{
+    for(auto iter = m_s.begin(); iter != m_s.end(); iter++)
+    {
+        cout << iter->first << endl;
+        for(int i = 0; i < iter->second.size(); i++)
+            cout << "<Job_no " << iter->second[i].first << ", Op_no " << iter->second[i].second << ">" << endl;
+    }
+}

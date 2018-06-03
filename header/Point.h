@@ -34,6 +34,8 @@ public:
     // the job_no and op_no are only indicator of the point
     bool operator==(const Point & p) const
     { return ((job_no == p.job_no) && (op_no == p.op_no)) ? true : false;}
+    bool operator!=(const Point & p) const
+    { return (*this == p) ? false : true; }
     bool operator<(const Point & p) const
     { return (job_no < p.job_no)||(job_no == p.job_no && op_no < p.op_no); }
     void print_point() 
